@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Report</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <!-- project css file  -->
+   <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+  
+  <style>
+    .report-header {
+      background-color: #D1E7DD;
+      padding: 20px;
+      border-bottom: 2px solid #dee2e6;
+      text-align: center;
+    }
+    .summary-card {
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+    /* Header styles */
+  .navbar-toggler {
+        padding: 0.25rem;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 767px) {
+        .container-xxl {
+            padding: 0 15px;
+        }
+        
+        .gap-3 {
+            gap: 0.5rem !important;
+        }
+
+        .navbar-toggler {
+            margin-left: 0.5rem;
+        }
+
+        
+    }
+     /* Add these styles for mobile sidebar behavior */
+     @media (max-width: 991px) {
+            .sidebar {
+                position: fixed;
+                left: -300px;
+                top: 0;
+                bottom: 0;
+                z-index: 1045;
+                transition: all 0.3s ease-in-out;
+            }
+    
+            .sidebar.show {
+                left: 0;
+            }
+    
+            /* Optional: Add overlay when sidebar is open */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1040;
+            }
+    
+            .sidebar.show + .sidebar-overlay {
+                display: block;
+            }
+        }
+  </style>
+</head>
+<body>
+
+  <div id="ebazar-layout" class="theme-blue">
+
+    <!-- sidebar -->
+    <div class="sidebar px-4 py-4 py-md-4 me-0" id="mainSidebar">
+      <div class="d-flex flex-column h-100">
+          <a href="index.html" class="mb-0 brand-icon">
+              <span class="logo-icon">
+                  <i class="bi bi-bag-check-fill fs-4"></i>
+              </span>
+              <span class="logo-text">Ayurlife</span>
+          </a>
+          <!-- Menu: main ul -->
+          <ul class="menu-list flex-grow-1 mt-3">
+              <li><a class="m-link" href="index.html"><i class="icofont-home fs-5"></i>
+                      <span>Dashboard</span></a></li>
+              <li><a class="m-link" href="customer-bill.html"><i class="icofont-focus fs-5"></i> <span>Customer Bill</span></a></li>
+              <li><a class="m-link active" href="product-add.html"><i class="icofont-focus fs-5"></i> <span>Add Stock</span></a></li>
+              <li class="collapsed">
+                  <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-product" href="#">
+                      <i class="icofont-truck-loaded fs-5"></i> <span>Stock</span> <span
+                          class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
+                  <!-- Menu: Sub menu ul -->
+                  <ul class="sub-menu collapse" id="menu-product">
+                      <li><a class="ms-link" href="product-list.html">Stock List</a></li>
+                     
+                      <li><a class="ms-link" href="product-edit.html">Update Stock</a></li>
+                      <li><a class="ms-link" href="product-detail.html">Stock Details</a></li>
+                  </ul>
+              </li>
+              <li class="collapsed">
+                  <a class="m-link" data-bs-toggle="collapse" data-bs-target="#categories" href="#">
+                      <i class="icofont-chart-flow fs-5"></i> <span>Report</span> <span
+                          class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
+                  <!-- Menu: Sub menu ul -->
+                  <ul class="sub-menu collapse show" id="categories">
+                      <li><a class="ms-link" href="customers.html">Customers Report</a></li>
+                      <li><a class="ms-link" href="inventory-info.html">Stock Report</a></li>
+                      <li><a class="ms-link " href="daily-report.html">Daily Report</a></li>
+                      <li><a class="ms-link" href="monthly-report.html">Month Report</a></li>
+                  </ul>
+              </li>
+          </ul>
+          <!-- Menu: menu collepce btn -->
+          <button type="button" class="btn btn-link sidebar-mini-btn text-light">
+              <span class="ms-2"><i class="icofont-bubble-right"></i></span>
+          </button>
+      </div>
+  </div>
+
+  <div class="main px-lg-4 px-md-4">
+
+    <!-- Body: Header -->
+    <div class="header">
+      <nav class="navbar py-4">
+          <div class="container-xxl">
+              <div class="d-flex justify-content-end align-items-center w-100">
+                 
+                  
+                  <!-- Right side with profile and menu toggle -->
+                  <div class="d-flex align-items-center gap-3 ms-auto">
+                      <!-- User Profile -->
+                      <div class="dropdown user-profile d-flex align-items-center">
+                          <div class="u-info me-2 d-none d-md-block text-end">
+                              <p class="mb-0 line-height-sm"><span class="font-weight-bold">John Quinn</span></p>
+                              <small>Admin Profile</small>
+                          </div>
+                          <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static">
+                              <img class="avatar lg rounded-circle img-thumbnail" src="assets/images/profile_av.svg" alt="profile">
+                          </a>
+                          <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
+                              <div class="card border-0 w280">
+                                  <div class="card-body pb-0">
+                                      <div class="d-flex py-1">
+                                          <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                          <div class="flex-fill ms-3">
+                                              <p class="mb-0"><span class="font-weight-bold">John Quinn</span></p>
+                                              <small class="">Johnquinn@gmail.com</small>
+                                          </div>
+                                      </div>
+                                      <div><hr class="dropdown-divider border-dark"></div>
+                                  </div>
+                                  <div class="list-group m-2">
+                                      <a href="admin-profile.html" class="list-group-item list-group-item-action border-0"><i class="icofont-ui-user fs-5 me-3"></i>Profile Page</a>
+                                      <a href="order-invoices.html" class="list-group-item list-group-item-action border-0"><i class="icofont-file-text fs-5 me-3"></i>Order Invoices</a>
+                                      <a href="ui-elements/auth-signin.html" class="list-group-item list-group-item-action border-0"><i class="icofont-logout fs-5 me-3"></i>Signout</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <!-- Menu Toggler -->
+                      <button class="navbar-toggler border-0 menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
+                          <span class="fa fa-bars"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </div>
+
+  <div class="container my-5">
+    <!-- Header -->
+    <div class="report-header">
+      <h1>Daily Report</h1>
+      <p>Overview of Daily Sales</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row text-center mb-4 mt-4">
+      <div class="col-md-3">
+        <div class="summary-card">
+          <h5>Total Sales</h5>
+          <h3>$1,500</h3>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="summary-card">
+          <h5>Total Orders</h5>
+          <h3>25</h3>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="summary-card">
+          <h5>New Customers</h5>
+          <h3>5</h3>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="summary-card">
+          <h5>Top Product</h5>
+          <h3>Product X</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end mb-2">
+      <button type="button " class="btn btn-primary" onclick="window.print()">
+        <i class="fa fa-print me-2"></i>Print
+      </button>
+    </div>
+
+    <!-- Report Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>15 Jan 2025</td>
+            <td>ORD-101</td>
+            <td>John Doe</td>
+            <td>Product X</td>
+            <td>2</td>
+            <td>$200</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>15 Jan 2025</td>
+            <td>ORD-102</td>
+            <td>Jane Smith</td>
+            <td>Product Y</td>
+            <td>1</td>
+            <td>$100</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+   <!-- Scripts -->
+   <script src="assets/plugin/jquery/3.3.1/jquery.min.js"></script>
+   <script src="assets/bundles/libscripts.bundle.js"></script>
+   <script src="assets/bundles/vendorscripts.bundle.js"></script>
+   <script src="assets/bundles/mainscripts.bundle.js"></script>
+
+   <script>
+    // Add this to your existing JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.getElementById('mainSidebar');
+        
+        // Create overlay element
+        const overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        document.body.appendChild(overlay);
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('show');
+        });
+
+        // Close sidebar when clicking overlay
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('show');
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Bill</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/ebazar.style.min.css">
+  <style>
+     .form-container {
+    max-width: 1200px;  /* Increased from default */
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .form-header {
+    margin-bottom: 30px;
+  }
+
+  /* Make input fields taller */
+  .form-control {
+    height: 45px;  /* Increased height */
+    font-size: 16px;  /* Slightly larger font */
+  }
+
+  /* Adjust textarea height */
+  textarea.form-control {
+    height: 45px;
+    resize: none;  /* Prevents manual resizing */
+  }
+
+  /* Submit button styling */
+  .submit-btn {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+
+  .btn-custom {
+    min-width: 120px;
+    height: 45px;  /* Match input height */
+    background-color: #1a73e8;
+    color: white;
+  }
+
+  .btn-custom:hover {
+    background-color: #1557b0;
+    color: white;
+  }
+
+  .table-container {
+    margin-top: 20px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.2rem;
+}
+
+.edit-btn {
+    background-color: #1a73e8;
+    border-color: #1a73e8;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+  /* Header styles */
+  .navbar-toggler {
+        padding: 0.25rem;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 767px) {
+        .container-xxl {
+            padding: 0 15px;
+        }
+        
+        .gap-3 {
+            gap: 0.5rem !important;
+        }
+
+        .navbar-toggler {
+            margin-left: 0.5rem;
+        }
+
+        
+    }
+
+     /* Add these styles to your existing CSS */
+     .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+
+    #netPayableAmount {
+        min-width: 120px;
+        font-weight: bold;
+    }
+
+    .fw-bold {
+        font-weight: bold;
+    }
+
+    .text-end {
+        text-align: right;
+    }
+
+     /* Add these styles for mobile sidebar behavior */
+     @media (max-width: 991px) {
+            .sidebar {
+                position: fixed;
+                left: -300px;
+                top: 0;
+                bottom: 0;
+                z-index: 1045;
+                transition: all 0.3s ease-in-out;
+            }
+    
+            .sidebar.show {
+                left: 0;
+            }
+    
+            /* Optional: Add overlay when sidebar is open */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1040;
+            }
+    
+            .sidebar.show + .sidebar-overlay {
+                display: block;
+            }
+        }
+  </style>
+</head>
+<body>
+  <div id="ebazar-layout" class="theme-blue">
+
+  
+    <!-- sidebar -->
+    <div class="sidebar px-4 py-4 py-md-4 me-0" id="mainSidebar">
+      <div class="d-flex flex-column h-100">
+          <a href="index.html" class="mb-0 brand-icon">
+              <span class="logo-icon">
+                  <i class="bi bi-bag-check-fill fs-4"></i>
+              </span>
+              <span class="logo-text">Ayurlife</span>
+          </a>
+          <!-- Menu: main ul -->
+          <ul class="menu-list flex-grow-1 mt-3">
+              <li><a class="m-link" href="index.html"><i class="icofont-home fs-5"></i><span>Dashboard</span></a></li>
+              <li><a class="m-link active" href="customer-bill.html"><i class="icofont-focus fs-5"></i> <span>Customer Bill</span></a></li>
+              <li><a class="m-link active" href="product-add.html"><i class="icofont-focus fs-5"></i> <span>Add Stock</span></a></li>
+              <li class="collapsed">
+                  <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-product" href="#">
+                      <i class="icofont-truck-loaded fs-5"></i> <span>Stock</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+                  </a>
+                  <!-- Menu: Sub menu ul -->
+                  <ul class="sub-menu collapse" id="menu-product">
+                      <li><a class="ms-link" href="product-list.html">Stock List</a></li>
+                     
+                      <li><a class="ms-link" href="product-edit.html">Update Stock</a></li>
+                      <li><a class="ms-link" href="product-detail.html">Stock Details</a></li>
+                  </ul>
+              </li>
+              <li class="collapsed">
+                  <a class="m-link" data-bs-toggle="collapse" data-bs-target="#categories" href="#">
+                      <i class="icofont-chart-flow fs-5"></i> <span>Report</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+                  </a>
+                  <!-- Menu: Sub menu ul -->
+                  <ul class="sub-menu collapse" id="categories">
+                      <li><a class="ms-link" href="customers.html">Customers Report</a></li>
+                      <li><a class="ms-link" href="inventory-info.html">Stock Report</a></li>
+                      <li><a class="ms-link" href="daily-report.html">Daily Report</a></li>
+                      <li><a class="ms-link" href="monthly-report.html">Month Report</a></li>
+                  </ul>
+              </li>
+          </ul>
+          <!-- Menu: menu collepce btn -->
+          <button type="button" class="btn btn-link sidebar-mini-btn text-light">
+              <span class="ms-2"><i class="icofont-bubble-right"></i></span>
+          </button>
+      </div>
+  </div>
+
+
+  <div class="main px-lg-4 px-md-4">
+
+    <!-- Body: Header -->
+    <div class="header">
+      <nav class="navbar py-4">
+          <div class="container-xxl">
+              <div class="d-flex justify-content-end align-items-center w-100">
+                 
+                  
+                  <!-- Right side with profile and menu toggle -->
+                  <div class="d-flex align-items-center gap-3 ms-auto">
+                      <!-- User Profile -->
+                      <div class="dropdown user-profile d-flex align-items-center">
+                          <div class="u-info me-2 d-none d-md-block text-end">
+                              <p class="mb-0 line-height-sm"><span class="font-weight-bold">John Quinn</span></p>
+                              <small>Admin Profile</small>
+                          </div>
+                          <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static">
+                              <img class="avatar lg rounded-circle img-thumbnail" src="assets/images/profile_av.svg" alt="profile">
+                          </a>
+                          <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
+                              <div class="card border-0 w280">
+                                  <div class="card-body pb-0">
+                                      <div class="d-flex py-1">
+                                          <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                          <div class="flex-fill ms-3">
+                                              <p class="mb-0"><span class="font-weight-bold">John Quinn</span></p>
+                                              <small class="">Johnquinn@gmail.com</small>
+                                          </div>
+                                      </div>
+                                      <div><hr class="dropdown-divider border-dark"></div>
+                                  </div>
+                                  <div class="list-group m-2">
+                                      <a href="admin-profile.html" class="list-group-item list-group-item-action border-0"><i class="icofont-ui-user fs-5 me-3"></i>Profile Page</a>
+                                      <a href="order-invoices.html" class="list-group-item list-group-item-action border-0"><i class="icofont-file-text fs-5 me-3"></i>Order Invoices</a>
+                                      <a href="ui-elements/auth-signin.html" class="list-group-item list-group-item-action border-0"><i class="icofont-logout fs-5 me-3"></i>Signout</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <!-- Menu Toggler -->
+                      <button class="navbar-toggler border-0 menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
+                          <span class="fa fa-bars"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </div>
+
+
+    <div class="form-container card">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2>Customer Bill</h2>
+       
+      </div>
+    
+      <!-- Form -->
+      <form>
+        <div class="row">
+          <!-- Name, Quantity, MRP -->
+          <div class="col-md-4 mb-2">
+            <label for="name" class="form-label">Customer Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter customer name" required>
+          </div>
+          <div class="col-md-4 mb-2">
+            <label for="mrp" class="form-label">Item</label>
+            <input type="text" class="form-control" id="item" placeholder="Enter item" required>
+          </div>
+          <div class="col-md-4 mb-2">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" required>
+          </div>
+          <div class="col-md-4 mb-2">
+            <label for="mrp" class="form-label">MRP</label>
+            <input type="number" class="form-control" id="mrp" placeholder="Enter MRP" required>
+          </div>
+
+          <!-- Discount, GST, Amount -->
+          <div class="col-md-4 mb-2">
+            <label for="disc" class="form-label">Discount (%)</label>
+            <input type="number" class="form-control" id="disc" placeholder="Enter discount percentage" required>
+          </div>
+          <div class="col-md-4 mb-2">
+            <label for="gst" class="form-label">GST (%)</label>
+            <input type="number" class="form-control" id="gst" placeholder="Enter GST percentage" required>
+          </div>
+          <div class="col-md-4 mb-2">
+            <label for="amount" class="form-label">Amount</label>
+            <input 
+                type="number" 
+                class="form-control" 
+                id="amount" 
+                step="0.01" 
+                min="0" 
+                placeholder="Enter total amount" 
+                required
+            >
+        </div>
+
+          <!-- Address and Description -->
+          
+          
+
+          <div class="col-md-8 mb-2">
+            <label for="address" class="form-label">Address</label>
+            <textarea class="form-control" id="address" rows="2" placeholder="Enter address" required></textarea>
+          </div>
+          
+        </div>
+
+        <!-- Submit Button - Right aligned -->
+        <div class="submit-btn text-end mt-3">
+          <button type="submit" class="btn btn-custom">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container card">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-0 ms-3">Bill Details</h3>
+            <button type="button" class="btn btn-primary me-3 mt-2" onclick="window.print()">
+                <i class="fa fa-print me-2"></i>Print
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>QTY</th>
+                            <th>MRP</th>
+                            <th>DISC %</th>
+                            <th>GST %</th>
+                            <th>AMT</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Table rows will be added here dynamically -->
+                    </tbody>
+                </table>
+    
+                <!-- Net Payable Table -->
+                <div class="d-flex justify-content-end mt-3">
+                    <table class="table table-bordered w-auto">
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">Net Payable:</td>
+                                <td class="text-end" id="netPayableAmount">₹0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+<script>
+
+ // Add this to your existing JavaScript
+ function updateNetPayable() {
+        const tbody = document.getElementById('productTableBody');
+        let total = 0;
+
+        // Loop through all rows and sum up the amounts
+        tbody.querySelectorAll('tr').forEach(row => {
+            const amountCell = row.cells[6]; // AMT is in the 7th column (index 6)
+            const amount = parseFloat(amountCell.textContent) || 0;
+            total += amount;
+        });
+
+        // Update the net payable amount with 2 decimal places
+        document.getElementById('netPayableAmount').textContent = '₹' + total.toFixed(2);
+    }
+
+
+  document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Get form values
+    const item = document.getElementById('item').value;
+    const quantity = parseFloat(document.getElementById('quantity').value);
+    const mrp = parseFloat(document.getElementById('mrp').value);
+    const disc = parseFloat(document.getElementById('disc').value);
+    const gst = parseFloat(document.getElementById('gst').value);
+    const amount = parseFloat(document.getElementById('amount').value).toFixed(2); // Get and format amount
+
+    // Validate inputs
+    if (!item || isNaN(quantity) || isNaN(mrp) || isNaN(disc) || isNaN(gst) || isNaN(parseFloat(amount))) {
+        alert('Please fill all fields with valid values');
+        return;
+    }
+
+    // Get current row count
+    const tbody = document.getElementById('productTableBody');
+    const rowCount = tbody.rows.length + 1;
+
+    // Create new row
+    const newRow = `
+        <tr>
+            <td>${rowCount}</td>
+            <td>${item}</td>
+            <td>${quantity}</td>
+            <td>${mrp.toFixed(2)}</td>
+            <td>${disc}</td>
+            <td>${gst}</td>
+            <td>${amount}</td>
+            <td>
+                <button class="btn btn-sm btn-primary edit-btn"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+    `;
+
+    // Add row to table
+    tbody.insertAdjacentHTML('beforeend', newRow);
+
+    // Clear form
+    this.reset();
+    updateNetPayable();
+
+  });
+  
+  // Auto calculate amount when Quantity, MRP or Discount changes
+  document.getElementById('quantity').addEventListener('input', calculateAmount);
+  document.getElementById('mrp').addEventListener('input', calculateAmount);
+  document.getElementById('disc').addEventListener('input', calculateAmount);
+  
+  // Update the calculateAmount function to include GST
+  function calculateAmount() {
+    const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+    const mrp = parseFloat(document.getElementById('mrp').value) || 0;
+    const disc = parseFloat(document.getElementById('disc').value) || 0;
+    const gst = parseFloat(document.getElementById('gst').value) || 0;
+
+    const discountedAmount = quantity * mrp * (100 - disc) / 100;
+    const calculatedAmount = discountedAmount + (discountedAmount * gst / 100);
+    
+    // Format to always show 2 decimal places
+    document.getElementById('amount').value = calculatedAmount.toFixed(2);
+}
+
+
+// Add GST input to trigger calculation
+document.getElementById('gst').addEventListener('input', calculateAmount);
+  // Delete row functionality
+  document.getElementById('productTableBody').addEventListener('click', function(e) {
+      if (e.target.closest('.delete-btn')) {
+          e.target.closest('tr').remove();
+      }
+  });
+
+   // Also update net payable when deleting rows
+   document.getElementById('productTableBody').addEventListener('click', function(e) {
+        if (e.target.closest('.delete-btn')) {
+            e.target.closest('tr').remove();
+            updateNetPayable(); // Update total after deletion
+        }
+    });
+  </script>
+
+<script>
+    // Add this to your existing JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.getElementById('mainSidebar');
+        
+        // Create overlay element
+        const overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        document.body.appendChild(overlay);
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('show');
+        });
+
+        // Close sidebar when clicking overlay
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('show');
+        });
+    });
+</script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <script src="assets/plugin/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+    <script src="assets/bundles/vendorscripts.bundle.js"></script>
+    <script src="assets/bundles/mainscripts.bundle.js"></script>
+</body>
+</html>
